@@ -1,0 +1,11 @@
+--- fnrancid    2017/01/26 00:48:26     1.1
++++ fnrancid    2017/01/26 00:49:31
+@@ -179,6 +179,8 @@
+        next if (/^\s*Virus-DB: .*/);
+        next if (/^\s*Extended DB: .*/);
+        next if (/^\s*IPS-DB: .*/);
++       next if (/^\s*IPS-ETDB: .*/);
++       next if (/^\s*Botnet DB: .*/);
+        next if (/^FortiClient application signature package:/);
+ 
+        ProcessHistory("","","","#$_");

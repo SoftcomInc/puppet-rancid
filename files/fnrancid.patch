@@ -1,11 +1,30 @@
---- fnrancid    2017/01/26 00:48:26     1.1
-+++ fnrancid    2017/01/26 00:49:31
+--- fnrancid	2017/01/26 00:48:26	1.1
++++ fnrancid	2017/01/27 18:03:26
 @@ -179,6 +179,8 @@
-        next if (/^\s*Virus-DB: .*/);
-        next if (/^\s*Extended DB: .*/);
-        next if (/^\s*IPS-DB: .*/);
-+       next if (/^\s*IPS-ETDB: .*/);
-+       next if (/^\s*Botnet DB: .*/);
-        next if (/^FortiClient application signature package:/);
+ 	next if (/^\s*Virus-DB: .*/);
+ 	next if (/^\s*Extended DB: .*/);
+ 	next if (/^\s*IPS-DB: .*/);
++	next if (/^\s*IPS-ETDB: .*/);
++	next if (/^\s*Botnet DB: .*/);
+ 	next if (/^FortiClient application signature package:/);
  
-        ProcessHistory("","","","#$_");
+ 	ProcessHistory("","","","#$_");
+@@ -210,15 +212,15 @@
+ 	# remove occurrances of conf_file_ver
+ 	next if (/^#?conf_file_ver=/);
+ 
+-	# filter cycling RSA private keys
+-	if (/^\s*set private-key "-----BEGIN RSA PRIVATE KEY-----/) {
++	# filter cycling ENCRYPTED private keys
++	if (/^\s*set private-key "-----BEGIN ENCRYPTED PRIVATE KEY-----/) {
+ 	    ProcessHistory("","","","#$_");
+ 	    ProcessHistory("","","","# <removed>");
+ 	    while (<INPUT>) {
+ 		tr/\015//d;
+ 		last if (/$prompt/);
+ 
+-		if (/^\s*-----END RSA PRIVATE KEY-----"/) {
++		if (/^\s*-----END ENCRYPTED PRIVATE KEY-----"/) {
+ 	    	    ProcessHistory("","","","#$_");
+ 		    last;
+ 		}
